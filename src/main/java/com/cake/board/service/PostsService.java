@@ -49,15 +49,29 @@ public class PostsService {
     @Transactional(readOnly = true)
     public List<PostsDto.Response> findByTitle(String title) {
         List<Posts> posts = postsRepository.findByTitleOrderByModifiedDateDesc(title);
+
+        //예외처리
+        if (posts.isEmpty()) {
+            throw new IllegalArgumentException("해당 제목의 게시글이 존재하지 않습니다. title: " + title);
+        }
+
         return posts.stream()
                 .map(PostsDto.Response::new)
                 .collect(Collectors.toList());
+
+
     }
 
     // 게시글 조회 - 특정 글쓴이
     @Transactional(readOnly = true)
     public List<PostsDto.Response> findByWriter(String writer) {
         List<Posts> posts = postsRepository.findByWriterOrderByModifiedDateDesc(writer);
+
+        if (posts.isEmpty()) {
+            throw new IllegalArgumentException("해당 작성자의 게시글이 존재하지 않습니다. writer: " + writer);
+        }
+
+
         return posts.stream()
                 .map(PostsDto.Response::new)
                 .collect(Collectors.toList());

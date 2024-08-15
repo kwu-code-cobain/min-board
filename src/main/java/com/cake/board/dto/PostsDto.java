@@ -3,8 +3,7 @@ package com.cake.board.dto;
 import com.cake.board.domain.Posts;
 import lombok.*;
 
-
- //request, response DTO 클래스를 하나로 묶어 InnerStaticClass로 한 번에 관리
+ //request, response DTO 클래스를 하나로 묶어서 InnerStaticClass로 한 번에 관리
 
 public class PostsDto {
 
@@ -14,16 +13,14 @@ public class PostsDto {
     @Builder
     public static class Request {
 
-        private Long id;
         private String title;
         private String writer;
         private String content;
         private String createdDate, modifiedDate;
 
-        /* Dto -> Entity */
+        // Dto -> Entity
         public Posts toEntity() {
             Posts posts = Posts.builder()
-                    .id(id)
                     .title(title)
                     .writer(writer)
                     .content(content)
@@ -41,7 +38,7 @@ public class PostsDto {
         private final String content;
         private final String createdDate, modifiedDate;
 
-        /* Entity -> Dto*/
+        // Entity -> Dto
         public Response(Posts posts) {
             this.id = posts.getId();
             this.title = posts.getTitle();
