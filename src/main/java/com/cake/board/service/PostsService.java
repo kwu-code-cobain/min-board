@@ -59,7 +59,6 @@ public class PostsService {
                 .map(PostsDto.Response::new)
                 .collect(Collectors.toList());
 
-
     }
 
     // 게시글 조회 - 특정 글쓴이

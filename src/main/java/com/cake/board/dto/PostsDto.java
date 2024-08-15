@@ -12,7 +12,7 @@ public class PostsDto {
     @NoArgsConstructor
     @Builder
     public static class Request {
-
+        private Long id;
         private String title;
         private String writer;
         private String content;
@@ -21,6 +21,7 @@ public class PostsDto {
         // Dto -> Entity
         public Posts toEntity() {
             Posts posts = Posts.builder()
+                    .id(id)
                     .title(title)
                     .writer(writer)
                     .content(content)
