@@ -67,15 +67,16 @@ public class PostsService {
     public List<PostsDto.Response> findByWriter(String writer) {
         List<Posts> posts = postsRepository.findByWriterOrderByModifiedDateDesc(writer);
 
+        //예외처리
         if (posts.isEmpty()) {
             throw new IllegalArgumentException("해당 작성자의 게시글이 존재하지 않습니다. writer: " + writer);
         }
-
 
         return posts.stream()
                 .map(PostsDto.Response::new)
                 .collect(Collectors.toList());
     }
+
     // 게시글 수정
     @Transactional
     public void update(Long id, PostsDto.Request dto) {
