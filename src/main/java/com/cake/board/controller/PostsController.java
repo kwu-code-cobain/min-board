@@ -59,4 +59,5 @@ public class PostsController {
         postsService.delete(id);
         return ResponseEntity.ok(id);
     }
+
 }

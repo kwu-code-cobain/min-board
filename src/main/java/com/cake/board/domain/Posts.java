@@ -2,6 +2,7 @@ package com.cake.board.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
