@@ -4,6 +4,7 @@ import com.cake.board.dto.UserDto;
 import com.cake.board.service.UserService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class UserController {
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<Long> joinUser (@RequestBody UserDto.Request dto) {
+    public ResponseEntity<Long> joinUser(@RequestBody UserDto.Request dto) {
         return ResponseEntity.ok(userService.joinUser(dto));
 
     }
@@ -32,19 +33,19 @@ public class UserController {
 
     // 회원 조회 - userid
     @GetMapping("/info/userid/{userid}")
-    public ResponseEntity<UserDto.Response> getUserid (@PathVariable String userid) {
+    public ResponseEntity<UserDto.Response> getUserid(@PathVariable String userid) {
         return ResponseEntity.ok(userService.findByUserid(userid));
     }
 
     // 회원 조회 - username
     @GetMapping("/info/username/{username}")
-    public ResponseEntity<UserDto.Response> getUsername (@PathVariable String username) {
+    public ResponseEntity<UserDto.Response> getUsername(@PathVariable String username) {
         return ResponseEntity.ok(userService.findByUsername(username));
     }
 
     // 회원 정보 수정
     @PutMapping("/edit/{userid}")
-    public ResponseEntity<String> modify (@PathVariable String userid, @RequestBody UserDto.Request dto) {
+    public ResponseEntity<String> modify(@PathVariable String userid, @RequestBody UserDto.Request dto) {
         try {
             dto.setUserid(userid);
             userService.modify(dto);
@@ -66,4 +67,16 @@ public class UserController {
     }
 
 
+    // 로그인
+    @GetMapping("/login/{userid}/{password}")
+    public ResponseEntity<String> validateUser(@PathVariable String userid, @PathVariable String password) {
+        boolean isValid = userService.validateUser(userid, password);
+
+        if (isValid) {
+            return ResponseEntity.ok("로그인 성공하였습니다");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디 또는 비밀번호가 일치하지 않습니다.");
+        }
+
+    }
 }

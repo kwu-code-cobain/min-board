@@ -96,5 +96,13 @@ public class UserService {
 
 
 
-    // 로그인 ?
+    // 로그인
+    @Transactional
+    public boolean validateUser(String userid, String password) {
+        User user = userRepository.findByUserid(userid).orElseThrow(() ->
+                new IllegalArgumentException("해당 회원이 존재하지 않습니다. id: " + userid ));
+
+        return user.getPassword().equals(password);
+    }
+
 }
